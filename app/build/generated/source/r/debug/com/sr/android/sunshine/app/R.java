@@ -1316,7 +1316,8 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f08002e;
         public static final int action_mode_bar_stub=0x7f08002d;
         public static final int action_mode_close_button=0x7f080020;
-        public static final int action_settings=0x7f080043;
+        public static final int action_refresh=0x7f080043;
+        public static final int action_settings=0x7f080044;
         public static final int activity_chooser_view_content=0x7f080021;
         public static final int always=0x7f080016;
         public static final int beginning=0x7f080013;
@@ -1405,7 +1406,8 @@ containing a value of this type.
         public static final int support_simple_spinner_dropdown_item=0x7f03001a;
     }
     public static final class menu {
-        public static final int main=0x7f0c0000;
+        public static final int forecastfragment=0x7f0c0000;
+        public static final int main=0x7f0c0001;
     }
     public static final class string {
         public static final int abc_action_bar_home_description=0x7f0a0000;
@@ -1424,9 +1426,10 @@ containing a value of this type.
         public static final int abc_shareactionprovider_share_with=0x7f0a000d;
         public static final int abc_shareactionprovider_share_with_application=0x7f0a000e;
         public static final int abc_toolbar_collapse_description=0x7f0a000f;
-        public static final int action_settings=0x7f0a0010;
-        public static final int app_name=0x7f0a0011;
-        public static final int hello_world=0x7f0a0012;
+        public static final int action_refresh=0x7f0a0010;
+        public static final int action_settings=0x7f0a0011;
+        public static final int app_name=0x7f0a0012;
+        public static final int hello_world=0x7f0a0013;
     }
     public static final class style {
         /**  Customize your theme here. 
