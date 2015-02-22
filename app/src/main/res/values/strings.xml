@@ -6,5 +6,20 @@
     <string name="action_settings">Settings</string>
     <string name="action_refresh">Refresh</string>
     <string name="title_activity_detail">DetailActivity</string>
-
+    <string name="title_activity_settings">Settings</string>
+    <string name="pref_location_key">location_setting</string>
+    <string name="pref_location"> Current Location</string>
+    <string name="pref_location_default"> 94043</string>
+    <string name="pref_unit"> Temperature Units</string>
+    <string name="pref_unit_key">unit_preference</string>
+    <string name="pref_unit_chooser"> Choose units</string>
+    <string-array name="pref_unit_array">
+        <item>Metric</item>
+        <item>Imperial</item>
+    </string-array>
+    <string-array name="pref_unit_array_value">
+        <item>Metric</item>
+        <item>Imperial</item>
+    </string-array>
+    <string name="pref_unit_default">Metric</string>
 </resources>

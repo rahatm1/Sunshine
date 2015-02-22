@@ -2,9 +2,11 @@ package com.sr.android.sunshine.app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.text.format.Time;
 import android.util.Log;
@@ -30,7 +32,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class ForecastFragment extends Fragment {
 
@@ -58,26 +59,32 @@ public class ForecastFragment extends Fragment {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_refresh) {
-          FetchWeatherTask weatherTask =  new FetchWeatherTask();
-          weatherTask.execute("94043");
+            updateWeather();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void updateWeather() {
+        FetchWeatherTask weatherTask =  new FetchWeatherTask();
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String location = sharedPref.getString(getString(R.string.pref_location_key),
+                getString(R.string.pref_location_default));
+        weatherTask.execute(location);
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        final String[] data = {"Today", "Yesterday", "Tomorrow","Today", "Yesterday", "Tomorrow","Today", "Yesterday", "Tomorrow","Today", "Yesterday", "Tomorrow"};
-
-        ArrayList<String> weekForecast = new ArrayList<String>(Arrays.asList(data));
         itemGenerator = new ArrayAdapter<String>(
                             getActivity(),
                             R.layout.list_item_forecast,
                             R.id.list_item_forecast_textview,
-                            weekForecast);
+                            new ArrayList<String>());
 
         ListView myListView = (ListView) rootView.findViewById(R.id.listview_forecast);
         myListView.setAdapter(itemGenerator);
@@ -106,6 +113,11 @@ public class ForecastFragment extends Fragment {
 
 
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateWeather();
+    }
 
 
     public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
@@ -227,6 +239,7 @@ public class ForecastFragment extends Fragment {
          */
         private String formatHighLows(double high, double low) {
             // For presentation, assume the user doesn't care about tenths of a degree.
+
             long roundedHigh = Math.round(high);
             long roundedLow = Math.round(low);
 
@@ -243,6 +256,11 @@ public class ForecastFragment extends Fragment {
          */
         private String[] getWeatherDataFromJson(String forecastJsonStr, int numDays)
                 throws JSONException {
+
+
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            String unit = sharedPref.getString(getString(R.string.pref_unit_key),
+                    getString(R.string.pref_unit_default));
 
             // These are the names of the JSON objects that need to be extracted.
             final String OWM_LIST = "list";
@@ -300,6 +318,10 @@ public class ForecastFragment extends Fragment {
                 double high = temperatureObject.getDouble(OWM_MAX);
                 double low = temperatureObject.getDouble(OWM_MIN);
 
+                if (unit.equals("Imperial")) {
+                    high = high * 1.8 + 32.00;
+                    low = low * 1.8 + 32.00;
+                }
                 highAndLow = formatHighLows(high, low);
                 resultStrs[i] = day + " - " + description + " - " + highAndLow;
             }
