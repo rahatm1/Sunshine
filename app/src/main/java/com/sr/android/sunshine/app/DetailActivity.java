@@ -3,12 +3,16 @@ package com.sr.android.sunshine.app;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.support.v7.widget.ShareActionProvider;
 import android.widget.TextView;
 
 
@@ -55,7 +59,28 @@ public class DetailActivity extends ActionBarActivity {
      */
     public static class PlaceholderFragment extends Fragment {
 
+        private String forecast;
+        private final String LOG_TAG = DetailActivity.class.getSimpleName();
+
         public PlaceholderFragment() {
+            setHasOptionsMenu(true);
+        }
+
+        @Override
+        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+            inflater.inflate(R.menu.detail_fragment, menu);
+            // Locate MenuItem with ShareActionProvider
+            MenuItem item = menu.findItem(R.id.action_share);
+
+            // Fetch and store ShareActionProvider
+            ShareActionProvider mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+            if (mShareActionProvider != null) {
+                mShareActionProvider.setShareIntent(sendForecastIntent());
+            }
+            else {
+                Log.d(LOG_TAG, "Share action provider is null");
+            }
+
         }
 
         @Override
@@ -64,11 +89,19 @@ public class DetailActivity extends ActionBarActivity {
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
             Intent intent = getActivity().getIntent();
-            String forecast = intent.getStringExtra("forecast");
+            forecast = intent.getStringExtra("forecast");
             TextView myTextView = (TextView) rootView.findViewById(R.id.text_forecast);
             myTextView.setText(forecast);
 
             return rootView;
+        }
+
+        public Intent sendForecastIntent() {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, forecast + "#SunshineApp");
+            sendIntent.setType("text/plain");
+            return sendIntent;
         }
     }
 }
