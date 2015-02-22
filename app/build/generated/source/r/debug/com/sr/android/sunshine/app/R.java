@@ -1315,6 +1315,7 @@ containing a value of this type.
         public static final int action_bar_subtitle=0x7f0a001f;
         public static final int action_bar_title=0x7f0a001e;
         public static final int action_context_bar=0x7f0a0032;
+        public static final int action_map=0x7f0a0046;
         public static final int action_menu_divider=0x7f0a0002;
         public static final int action_menu_presenter=0x7f0a0003;
         public static final int action_mode_bar=0x7f0a002e;
@@ -1434,19 +1435,20 @@ containing a value of this type.
         public static final int abc_shareactionprovider_share_with=0x7f0c000d;
         public static final int abc_shareactionprovider_share_with_application=0x7f0c000e;
         public static final int abc_toolbar_collapse_description=0x7f0c000f;
-        public static final int action_refresh=0x7f0c0010;
-        public static final int action_settings=0x7f0c0011;
-        public static final int app_name=0x7f0c0012;
-        public static final int hello_world=0x7f0c0013;
-        public static final int pref_location=0x7f0c0014;
-        public static final int pref_location_default=0x7f0c0015;
-        public static final int pref_location_key=0x7f0c0016;
-        public static final int pref_unit=0x7f0c0017;
-        public static final int pref_unit_chooser=0x7f0c0018;
-        public static final int pref_unit_default=0x7f0c0019;
-        public static final int pref_unit_key=0x7f0c001a;
-        public static final int title_activity_detail=0x7f0c001b;
-        public static final int title_activity_settings=0x7f0c001c;
+        public static final int action_map=0x7f0c0010;
+        public static final int action_refresh=0x7f0c0011;
+        public static final int action_settings=0x7f0c0012;
+        public static final int app_name=0x7f0c0013;
+        public static final int hello_world=0x7f0c0014;
+        public static final int pref_location=0x7f0c0015;
+        public static final int pref_location_default=0x7f0c0016;
+        public static final int pref_location_key=0x7f0c0017;
+        public static final int pref_unit=0x7f0c0018;
+        public static final int pref_unit_chooser=0x7f0c0019;
+        public static final int pref_unit_default=0x7f0c001a;
+        public static final int pref_unit_key=0x7f0c001b;
+        public static final int title_activity_detail=0x7f0c001c;
+        public static final int title_activity_settings=0x7f0c001d;
     }
     public static final class style {
         /**  Customize your theme here. 
