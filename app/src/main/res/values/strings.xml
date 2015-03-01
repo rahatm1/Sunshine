@@ -24,4 +24,6 @@
         <item>Imperial</item>
     </string-array>
     <string name="pref_unit_default">Metric</string>
+    <string name="pref_units_metric">Metric</string>
+    <string name="pref_units_imperial">Imperial</string>
 </resources>

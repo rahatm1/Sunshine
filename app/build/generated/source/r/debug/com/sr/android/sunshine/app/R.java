@@ -1450,8 +1450,10 @@ containing a value of this type.
         public static final int pref_unit_chooser=0x7f0c001a;
         public static final int pref_unit_default=0x7f0c001b;
         public static final int pref_unit_key=0x7f0c001c;
-        public static final int title_activity_detail=0x7f0c001d;
-        public static final int title_activity_settings=0x7f0c001e;
+        public static final int pref_units_imperial=0x7f0c001d;
+        public static final int pref_units_metric=0x7f0c001e;
+        public static final int title_activity_detail=0x7f0c001f;
+        public static final int title_activity_settings=0x7f0c0020;
     }
     public static final class style {
         /**  Customize your theme here. 
