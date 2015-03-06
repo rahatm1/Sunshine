@@ -183,10 +183,15 @@ public class ForecastFragment extends Fragment implements android.support.v4.app
         mForecastAdapter.swapCursor(null);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        updateWeather();
+//    }
+
+    public void onLocationChanged() {
         updateWeather();
+        getLoaderManager().restartLoader(FORECAST_LOADER, null, this);
     }
 
 
