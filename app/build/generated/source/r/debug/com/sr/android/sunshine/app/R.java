@@ -1315,15 +1315,15 @@ containing a value of this type.
         public static final int action_bar_subtitle=0x7f0a001f;
         public static final int action_bar_title=0x7f0a001e;
         public static final int action_context_bar=0x7f0a0032;
-        public static final int action_map=0x7f0a0047;
+        public static final int action_map=0x7f0a004b;
         public static final int action_menu_divider=0x7f0a0002;
         public static final int action_menu_presenter=0x7f0a0003;
         public static final int action_mode_bar=0x7f0a002e;
         public static final int action_mode_bar_stub=0x7f0a002d;
         public static final int action_mode_close_button=0x7f0a0020;
-        public static final int action_refresh=0x7f0a0045;
-        public static final int action_settings=0x7f0a0046;
-        public static final int action_share=0x7f0a0044;
+        public static final int action_refresh=0x7f0a0049;
+        public static final int action_settings=0x7f0a004a;
+        public static final int action_share=0x7f0a0048;
         public static final int activity_chooser_view_content=0x7f0a0021;
         public static final int always=0x7f0a0016;
         public static final int beginning=0x7f0a0013;
@@ -1347,7 +1347,11 @@ containing a value of this type.
         public static final int image=0x7f0a0023;
         public static final int listMode=0x7f0a0009;
         public static final int list_item=0x7f0a0025;
-        public static final int list_item_forecast_textview=0x7f0a0043;
+        public static final int list_item_date_textview=0x7f0a0044;
+        public static final int list_item_forecast_textview=0x7f0a0045;
+        public static final int list_item_high_textview=0x7f0a0046;
+        public static final int list_item_icon=0x7f0a0043;
+        public static final int list_item_low_textview=0x7f0a0047;
         public static final int listview_forecast=0x7f0a0042;
         public static final int middle=0x7f0a0015;
         public static final int never=0x7f0a0019;
@@ -1412,7 +1416,8 @@ containing a value of this type.
         public static final int fragment_detail=0x7f030019;
         public static final int fragment_main=0x7f03001a;
         public static final int list_item_forecast=0x7f03001b;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001c;
+        public static final int list_item_forecast_today=0x7f03001c;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001d;
     }
     public static final class menu {
         public static final int detail_fragment=0x7f0e0000;
@@ -1442,18 +1447,21 @@ containing a value of this type.
         public static final int action_settings=0x7f0c0012;
         public static final int action_share=0x7f0c0013;
         public static final int app_name=0x7f0c0014;
-        public static final int hello_world=0x7f0c0015;
-        public static final int pref_location=0x7f0c0016;
-        public static final int pref_location_default=0x7f0c0017;
-        public static final int pref_location_key=0x7f0c0018;
-        public static final int pref_unit=0x7f0c0019;
-        public static final int pref_unit_chooser=0x7f0c001a;
-        public static final int pref_unit_default=0x7f0c001b;
-        public static final int pref_unit_key=0x7f0c001c;
-        public static final int pref_units_imperial=0x7f0c001d;
-        public static final int pref_units_metric=0x7f0c001e;
-        public static final int title_activity_detail=0x7f0c001f;
-        public static final int title_activity_settings=0x7f0c0020;
+        public static final int format_full_friendly_date=0x7f0c0015;
+        public static final int hello_world=0x7f0c0016;
+        public static final int pref_location=0x7f0c0017;
+        public static final int pref_location_default=0x7f0c0018;
+        public static final int pref_location_key=0x7f0c0019;
+        public static final int pref_unit=0x7f0c001a;
+        public static final int pref_unit_chooser=0x7f0c001b;
+        public static final int pref_unit_default=0x7f0c001c;
+        public static final int pref_unit_key=0x7f0c001d;
+        public static final int pref_units_imperial=0x7f0c001e;
+        public static final int pref_units_metric=0x7f0c001f;
+        public static final int title_activity_detail=0x7f0c0020;
+        public static final int title_activity_settings=0x7f0c0021;
+        public static final int today=0x7f0c0022;
+        public static final int tomorrow=0x7f0c0023;
     }
     public static final class style {
         /**  Customize your theme here. 
