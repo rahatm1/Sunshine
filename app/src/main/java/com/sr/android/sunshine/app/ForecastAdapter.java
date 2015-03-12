@@ -52,35 +52,6 @@ public class ForecastAdapter extends CursorAdapter {
         return VIEW_TYPE_COUNT;
     }
 
-    /**
-     * Prepare the weather high/lows for presentation.
-     */
-//    private String formatHighLows(double high, double low) {
-//        boolean isMetric = Utility.isMetric(mContext);
-//        String highLowStr = Utility.formatTemperature(high, isMetric) + "/" + Utility.formatTemperature(low, isMetric);
-//        return highLowStr;
-//    }
-
-    /*
-        This is ported from FetchWeatherTask --- but now we go straight from the cursor to the
-        string.
-     */
-//    private String convertCursorRowToUXFormat(Cursor cursor) {
-//        // get row indices for our cursor
-////        int idx_max_temp = cursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_MAX_TEMP);
-////        int idx_min_temp = cursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_MAX_TEMP);
-////        int idx_date = cursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_DATE);
-////        int idx_short_desc = cursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_SHORT_DESC);
-//
-//        String highAndLow = formatHighLows(
-//                cursor.getDouble(ForecastFragment.COL_WEATHER_MAX_TEMP),
-//                cursor.getDouble(ForecastFragment.COL_WEATHER_MIN_TEMP));
-//
-//        return Utility.formatDate(cursor.getLong(ForecastFragment.COL_WEATHER_DATE)) +
-//                " - " + cursor.getString(ForecastFragment.COL_WEATHER_DESC) +
-//                " - " + highAndLow;
-//    }
-
     /*
         Remember that these views are reused as needed.
      */
@@ -100,10 +71,6 @@ public class ForecastAdapter extends CursorAdapter {
         ViewHolder viewHolder = new ViewHolder(view);
         view.setTag(viewHolder);
         return view;
-//
-//        View view = LayoutInflater.from(context).inflate(R.layout.list_item_forecast, parent, false);
-//
-//        return view;
     }
 
     /*
@@ -116,9 +83,16 @@ public class ForecastAdapter extends CursorAdapter {
 
         ViewHolder viewHolder = (ViewHolder) view.getTag();
         // Read weather icon ID from cursor
-        int weatherId = cursor.getInt(ForecastFragment.COL_WEATHER_ID);
+        int iconId;
+        int weatherId = cursor.getInt(ForecastFragment.COL_WEATHER_CONDITION_ID);
         // Use placeview image for now
-        viewHolder.iconView.setImageResource(R.drawable.ic_launcher);
+        if (VIEW_TYPE_TODAY == getItemViewType(cursor.getPosition())) {
+            iconId = Utility.getArtResourceForWeatherCondition(weatherId);
+        }
+        else {
+            iconId = Utility.getIconResourceForWeatherCondition(weatherId);
+        }
+        viewHolder.iconView.setImageResource(iconId);
 
         Long date = cursor.getLong(ForecastFragment.COL_WEATHER_DATE);
         viewHolder.dateView.setText(Utility.getFriendlyDayString(context, date));
