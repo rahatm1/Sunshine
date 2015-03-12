@@ -117,7 +117,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     public Loader<Cursor> onCreateLoader(int id, Bundle bundle) {
         Intent intent = getActivity().getIntent();
-        if (intent == null) {
+        if (intent == null || intent.getData() == null) {
             return null;
         }
         return new CursorLoader(

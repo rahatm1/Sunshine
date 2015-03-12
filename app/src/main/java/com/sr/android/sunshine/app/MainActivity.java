@@ -3,8 +3,8 @@ package com.sr.android.sunshine.app;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,30 +14,41 @@ public class MainActivity extends ActionBarActivity {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private String mLocation;
-    public static final String FORECASTFRAGMENT_TAG = "forecast_fragment";
+    private static final String DETAILFRAGMENT_TAG = "DFTAG";
+    private boolean mTwoPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
         mLocation = Utility.getPreferredLocation(this);
 
-        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                .detectAll()
-                .penaltyLog()
-                .build());
-        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-                .detectLeakedSqlLiteObjects()
-                .detectLeakedClosableObjects()
-                .penaltyLog()
-                .penaltyDeath()
-                .build());
-        super.onCreate(savedInstanceState);
         Log.v(LOG_TAG, "onCreate");
+
         setContentView(R.layout.activity_main);
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new ForecastFragment(), FORECASTFRAGMENT_TAG)
-                    .commit();
+        if (findViewById(R.id.weather_detail_container) != null) {
+            // The detail container view will be present only in the large-screen layouts
+            // (res/layout-sw600dp). If this view is present, then the activity should be
+            // in two-pane mode.
+            mTwoPane = true;
+            // In two-pane mode, show the detail view in this activity by
+            // adding or replacing the detail fragment using a
+            // fragment transaction.
+            if (savedInstanceState == null) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.weather_detail_container, new DetailFragment(), DETAILFRAGMENT_TAG)
+                        .commit();
+            }
+        } else {
+            mTwoPane = false;
         }
+        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+
+        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+        Log.v(LOG_TAG, "mTwoPane:" + mTwoPane);
+        Log.v(LOG_TAG, dpHeight +"x" + dpWidth);
+
     }
 
 
@@ -93,7 +104,7 @@ public class MainActivity extends ActionBarActivity {
         String newLocation = Utility.getPreferredLocation(this);
         if (!mLocation.equals(newLocation)) {
             ForecastFragment forecastFragment = (ForecastFragment)getSupportFragmentManager()
-                                    .findFragmentByTag(FORECASTFRAGMENT_TAG);
+                                    .findFragmentById(R.id.fragment_forecast);
             forecastFragment.onLocationChanged();
             mLocation = newLocation;
         }
