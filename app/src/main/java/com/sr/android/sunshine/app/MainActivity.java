@@ -10,7 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements ForecastFragment.Callback {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private String mLocation;
@@ -28,7 +28,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         if (findViewById(R.id.weather_detail_container) != null) {
             // The detail container view will be present only in the large-screen layouts
-            // (res/layout-sw600dp). If this view is present, then the activity should be
+            // (res/layout-sw400dp). If this view is present, then the activity should be
             // in two-pane mode.
             mTwoPane = true;
             // In two-pane mode, show the detail view in this activity by
@@ -42,6 +42,7 @@ public class MainActivity extends ActionBarActivity {
         } else {
             mTwoPane = false;
         }
+
         DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
 
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
@@ -49,6 +50,25 @@ public class MainActivity extends ActionBarActivity {
         Log.v(LOG_TAG, "mTwoPane:" + mTwoPane);
         Log.v(LOG_TAG, dpHeight +"x" + dpWidth);
 
+    }
+
+    @Override
+    public void onItemSelected(Uri contentUri) {
+        if (mTwoPane) {
+            DetailFragment detailFragment = new DetailFragment();
+
+            // Supply index input as an argument.
+            Bundle args = new Bundle();
+            args.putParcelable(DetailFragment.DETAIL_URI, contentUri);
+            detailFragment.setArguments(args);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.weather_detail_container, detailFragment, DETAILFRAGMENT_TAG)
+                    .commit();
+        }
+        else {
+            startActivity(new Intent(this, DetailActivity.class)
+                    .setData(contentUri));
+        }
     }
 
 
@@ -98,15 +118,20 @@ public class MainActivity extends ActionBarActivity {
     }
 
     @Override
-    public void onResume() {
+    protected void onResume() {
         super.onResume();
-        Log.v(LOG_TAG, "onResume");
-        String newLocation = Utility.getPreferredLocation(this);
-        if (!mLocation.equals(newLocation)) {
-            ForecastFragment forecastFragment = (ForecastFragment)getSupportFragmentManager()
-                                    .findFragmentById(R.id.fragment_forecast);
-            forecastFragment.onLocationChanged();
-            mLocation = newLocation;
+        String location = Utility.getPreferredLocation( this );
+        // update the location in our second pane using the fragment manager
+        if (location != null && !location.equals(mLocation)) {
+            ForecastFragment ff = (ForecastFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_forecast);
+            if ( null != ff ) {
+                ff.onLocationChanged();
+            }
+            DetailFragment df = (DetailFragment)getSupportFragmentManager().findFragmentByTag(DETAILFRAGMENT_TAG);
+            if ( null != df ) {
+                df.onLocationChanged(location);
+            }
+            mLocation = location;
         }
     }
 

@@ -1,6 +1,6 @@
 package com.sr.android.sunshine.app;
 
-import android.content.Intent;
+import android.app.Activity;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,6 +22,9 @@ public class ForecastFragment extends Fragment implements android.support.v4.app
 
     private ForecastAdapter mForecastAdapter;
     private static final int FORECAST_LOADER = 101;
+    Callback mCallback;
+    private boolean mTwoPane;
+
 
     private static final String[] FORECAST_COLUMNS = {
             // In this case the id needs to be fully qualified with a table name, since
@@ -54,6 +57,33 @@ public class ForecastFragment extends Fragment implements android.support.v4.app
     static final int COL_COORD_LONG = 8;
 
     public ForecastFragment() {
+    }
+
+
+    /**
+     * A callback interface that all activities containing this fragment must
+     * implement. This mechanism allows activities to be notified of item
+     * selections.
+     */
+    public interface Callback {
+        /**
+         * DetailFragmentCallback for when an item has been selected.
+         */
+        public void onItemSelected(Uri dateUri);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            mCallback = (Callback) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement Callback");
+        }
     }
 
     @Override
@@ -117,11 +147,10 @@ public class ForecastFragment extends Fragment implements android.support.v4.app
                 Cursor cursor = (Cursor) parent.getItemAtPosition(position);
                 if (cursor != null) {
                     String locationSetting = Utility.getPreferredLocation(getActivity());
-                    Intent intent = new Intent(getActivity(), DetailActivity.class)
-                            .setData(WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
+                    Uri  weatherDateUri = WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
                                     locationSetting, cursor.getLong(COL_WEATHER_DATE)
-                            ));
-                    startActivity(intent);
+                            );
+                    mCallback.onItemSelected(weatherDateUri);
                 }
                 }
             });
