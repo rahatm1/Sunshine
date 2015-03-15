@@ -15,7 +15,7 @@ public class MainActivity extends ActionBarActivity implements ForecastFragment.
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private String mLocation;
     private static final String DETAILFRAGMENT_TAG = "DFTAG";
-    private boolean mTwoPane;
+    private boolean mTwoPane = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +43,12 @@ public class MainActivity extends ActionBarActivity implements ForecastFragment.
             mTwoPane = false;
         }
 
-        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+        ForecastFragment forecastFragment =  ((ForecastFragment)getSupportFragmentManager()
+                .findFragmentById(R.id.fragment_forecast));
+        forecastFragment.setUseTodayLayout(!mTwoPane);
 
+        //XXX: Logs view size
+        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
         float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
         Log.v(LOG_TAG, "mTwoPane:" + mTwoPane);

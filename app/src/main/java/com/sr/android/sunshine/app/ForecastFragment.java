@@ -18,12 +18,16 @@ import android.widget.ListView;
 
 import com.sr.android.sunshine.app.data.WeatherContract;
 
-public class ForecastFragment extends Fragment implements android.support.v4.app.LoaderManager.LoaderCallbacks<Cursor> {
+public class ForecastFragment extends Fragment
+        implements android.support.v4.app.LoaderManager.LoaderCallbacks<Cursor> {
 
     private ForecastAdapter mForecastAdapter;
     private static final int FORECAST_LOADER = 101;
+    private int mLastPos = ListView.INVALID_POSITION;
+    private ListView myListView;
+    private static final String mLastPosKey = "LAST_POS";
     Callback mCallback;
-    private boolean mTwoPane;
+    private boolean mUseTodayLayout = false;
 
 
     private static final String[] FORECAST_COLUMNS = {
@@ -124,16 +128,25 @@ public class ForecastFragment extends Fragment implements android.support.v4.app
         weatherTask.execute(location);
     }
 
+    public void setUseTodayLayout (boolean useTodayLayout) {
+        mUseTodayLayout = useTodayLayout;
+        if (mForecastAdapter != null) {
+            mForecastAdapter.setUseTodayLayout(useTodayLayout);
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             final Bundle savedInstanceState) {
 
+        if (savedInstanceState != null && savedInstanceState.containsKey(mLastPosKey)) {
+            mLastPos = savedInstanceState.getInt(mLastPosKey);
+        }
         mForecastAdapter = new ForecastAdapter(getActivity(), null, 0);
-
+        mForecastAdapter.setUseTodayLayout(mUseTodayLayout);
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        ListView myListView = (ListView) rootView.findViewById(R.id.listview_forecast);
+        myListView = (ListView) rootView.findViewById(R.id.listview_forecast);
         myListView.setAdapter(mForecastAdapter);
 
 
@@ -141,7 +154,7 @@ public class ForecastFragment extends Fragment implements android.support.v4.app
         myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
-
+                mLastPos = position;
                 // CursorAdapter returns a cursor at the correct position for getItem(), or null
                 // if it cannot seek to that position.
                 Cursor cursor = (Cursor) parent.getItemAtPosition(position);
@@ -179,6 +192,10 @@ public class ForecastFragment extends Fragment implements android.support.v4.app
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mForecastAdapter.swapCursor(data);
+
+        if ((myListView != null) && (mLastPos != ListView.INVALID_POSITION)) {
+            myListView.smoothScrollToPosition(mLastPos);
+        }
     }
 
     public void onLoaderReset(Loader<Cursor> loader) {
@@ -188,5 +205,13 @@ public class ForecastFragment extends Fragment implements android.support.v4.app
     public void onLocationChanged() {
         updateWeather();
         getLoaderManager().restartLoader(FORECAST_LOADER, null, this);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (mLastPos != ListView.INVALID_POSITION) {
+            outState.putInt(mLastPosKey, mLastPos);
+        }
+        super.onSaveInstanceState(outState);
     }
 }
