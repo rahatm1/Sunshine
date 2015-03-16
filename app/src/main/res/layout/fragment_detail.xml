@@ -13,11 +13,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/day_name_textview"/>
+                android:id="@+id/day_name_textview"
+                android:textSize="24sp"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@android:color/black"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/month_date_textview"/>
+                android:id="@+id/month_date_textview"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@color/sunshine_grey"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,15 +36,22 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:gravity="center_horizontal"
                 android:layout_weight="1">
                 <TextView
                     android:id="@+id/high_textview"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:textSize="96sp"
+                    android:fontFamily="sans-serif-light"
+                    android:textColor="@android:color/black"/>
                 <TextView
                     android:id="@+id/low_textview"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:textSize="48sp"
+                    android:fontFamily="sans-serif-light"
+                    android:textColor="@color/sunshine_grey"/>
             </LinearLayout>
 
             <LinearLayout
@@ -54,7 +67,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/forecast_textview"/>
+                    android:id="@+id/forecast_textview"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    android:textColor="@color/sunshine_grey"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -63,15 +78,24 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/humidity_textview"/>
+                android:id="@+id/humidity_textview"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:layout_marginTop="4dp"
+                android:fontFamily="sans-serif-light"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/pressure_textview" />
+                android:id="@+id/pressure_textview"
+                android:layout_marginTop="4dp"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:fontFamily="sans-serif-light"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/wind_textview"/>
+                android:id="@+id/wind_textview"
+                android:layout_marginTop="4dp"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:fontFamily="sans-serif-light"/>
 
     </LinearLayout>
 </ScrollView>
