@@ -94,28 +94,7 @@ public class MainActivity extends ActionBarActivity implements ForecastFragment.
             return true;
         }
 
-        if (id == R.id.action_map) {
-
-            Uri geoLocation = Uri.parse("geo:0,0?").buildUpon()
-            .appendQueryParameter("q", mLocation)
-            .build();
-
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(geoLocation);
-            if (intent.resolveActivity(getPackageManager()) != null) {
-                startActivity(intent);
-            }
-
-            return true;
-        }
-
-            return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.v(LOG_TAG, "onStart");
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -136,22 +115,5 @@ public class MainActivity extends ActionBarActivity implements ForecastFragment.
         }
     }
 
-    @Override
-    public void onPause(){
-        super.onPause();
-        Log.v(LOG_TAG, "onPause");
-    }
-
-    @Override
-    public void onStop(){
-        super.onStop();
-        Log.v(LOG_TAG, "onStop");
-    }
-
-    @Override
-    public void onDestroy(){
-        super.onDestroy();
-        Log.v(LOG_TAG, "onDestroy");
-    }
 }
 
