@@ -15,4 +15,8 @@
         android:entries="@array/pref_unit_array"
         android:entryValues="@array/pref_unit_array_value"
         android:defaultValue="@string/pref_unit_default" />
+    <CheckBoxPreference
+        android:key="@string/pref_notify_key"
+        android:title="@string/pref_notify_title"
+        android:defaultValue="false" />
 </PreferenceScreen>
