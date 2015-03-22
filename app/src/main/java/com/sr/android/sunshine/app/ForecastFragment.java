@@ -1,7 +1,6 @@
 package com.sr.android.sunshine.app;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,7 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.sr.android.sunshine.app.data.WeatherContract;
-import com.sr.android.sunshine.app.service.SunshineService;
+import com.sr.android.sunshine.app.sync.SunshineSyncAdapter;
 
 public class ForecastFragment extends Fragment
         implements android.support.v4.app.LoaderManager.LoaderCallbacks<Cursor> {
@@ -125,10 +124,7 @@ public class ForecastFragment extends Fragment
     }
 
     public void updateWeather() {
-        String location = Utility.getPreferredLocation(getActivity());
-        Intent intent = new Intent(getActivity(), SunshineService.class);
-        intent.putExtra(Intent.EXTRA_TEXT, location);
-        getActivity().startService(intent);
+        SunshineSyncAdapter.syncImmediately(getActivity());
     }
 
     public void setUseTodayLayout (boolean useTodayLayout) {
